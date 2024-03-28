@@ -29,7 +29,7 @@
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary"  @click.prevent="authUser">
                         <span class="spinner-border spinner-border-sm mr-1"></span>
                         Login
                     </button>
@@ -41,18 +41,20 @@
 </template>
 
 <script lang="ts" setup>
-    
+import { router } from '@/router';
 import { useAuthStore } from '@/store/authLogin';
 import {ref,Ref} from 'vue'
-   
+
     let email = ref("")
     let password = ref("")
 
     const authUser = async ()=>{
         const auth =useAuthStore()
         const  sucess= await auth.login(email.value,password.value)
+        console.log(sucess)
         if(sucess){
             alert("Exito!")
+            router.push('dashboard');
         }else{
             alert("Login Incorrecto")
         }

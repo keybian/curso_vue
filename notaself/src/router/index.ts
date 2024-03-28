@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
@@ -60,8 +60,11 @@ router.beforeEach((to,from,next)=>{
   const auth=useAuthStore()
   const needAuth = to.meta.requireAuth
   console.log(auth.jwt.length)
+  console.log(to.meta.requireAuth)
   if(needAuth && (auth.jwt.length ==0)){
+    alert('Login Incorrecto,Intente de Nuevo')
     next('login')
+    
   }else{
     next()
   }

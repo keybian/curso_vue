@@ -17,7 +17,7 @@ export const useAuthStore=defineStore('authLogin',{
         async login(email:string,password:string): Promise<boolean> {
             try{
     
-                const res = await fetch('https://376usy84.directus.app/auth/login',{
+                const res = await fetch('http://127.0.0.1:8000/api/auth/login',{
                     method: 'POST',
                     headers:{
                         'Accept':'application/json',
@@ -29,15 +29,17 @@ export const useAuthStore=defineStore('authLogin',{
                     })
     
                 })
-    
+
                 const response = await res.json()
+                console.log(response)
                 if('errors' in response){
                     this.error = "Login Failed"
                     this.jwt=""
                     return false
                 }
-    
-                this.jwt=response.data.access_token
+                console.log("TRUE")
+                this.jwt=response.token
+                console.log(this.jwt)
                 this.error=""
                 return true
     
